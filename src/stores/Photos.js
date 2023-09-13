@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { defineStore } from 'pinia'
 import { API_BASE_URL, API_ACCESS_KEY, PHOTOS_PER_PAGE } from '../constants'
 import axios from 'axios'
@@ -6,7 +6,9 @@ import axios from 'axios'
 export const usePhotosStore = defineStore('photosStore', () => {
   const photos = ref([])
   const pending = ref(false)
+  const loadingExtraPhotos = ref(false)
   const page = ref(1)
+  const searchValue = ref('')
 
   const { get } = axios
 
@@ -24,17 +26,37 @@ export const usePhotosStore = defineStore('photosStore', () => {
 
   const searchPhoto = async(keyWord) => {
     try {
-      const response = await get(`${API_BASE_URL}/search/photos?query=${keyWord}&client_id=${API_ACCESS_KEY}&page=${page.value}`)
-      photos.value = response.data
+      const response = await get(`${API_BASE_URL}/search/photos?client_id=${API_ACCESS_KEY}&query=${keyWord}&page=${page.value}`)
+      photos.value = response.data.results
     } catch (error) {
       console.log(error, 'Error in searching photos/photo')
+    }
+  }
+
+  const loadMore = async() => {
+    try {
+      loadingExtraPhotos.value = true
+      await nextTick()
+      
+      setTimeout(async () => {
+        page.value++
+        const response = await get(`${API_BASE_URL}/photos?client_id=${API_ACCESS_KEY}&query=${searchValue}&page=${page.value}&per_page=${PHOTOS_PER_PAGE}`)
+        photos.value = [...photos.value, ...response.data];
+        loadingExtraPhotos.value = false
+      }, 2000)
+    } catch (error) {
+      console.log(error, 'Error in loading more photos')
+      loadingExtraPhotos.value = false
     }
   }
   
   return { 
     photos,
     pending,
+    loadingExtraPhotos,
+    searchValue,
     fetchRandomPhotos,
-    searchPhoto
+    searchPhoto,
+    loadMore
   }
 })

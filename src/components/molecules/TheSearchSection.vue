@@ -4,14 +4,13 @@ import { usePhotosStore } from '../../stores/Photos'
 import BaseInput from '../atoms/BaseInput.vue'
 
 const photosStore = usePhotosStore()
-const searchValue = ref('')
 
-const search = async () => {
-  if (searchValue.value.trim() === '') {
+const handleSearch = async() => {
+  if (photosStore.searchValue.trim() === '') {
     return
   }
 
-  photosStore.searchPhoto(searchValue.value)
+  photosStore.searchPhoto(photosStore.searchValue)
 }
 </script>
 
@@ -20,10 +19,10 @@ const search = async () => {
     <div class="search-section__input-wrapper">
       <BaseInput
         :id="search"
-        v-model="searchValue"
-        :value="searchValue"
+        v-model="photosStore.searchValue"
+        :value="photosStore.searchValue"
         placeholder="Поиск"
-        @input="search"
+        @keydown.enter="handleSearch"
       />
       <img src="icons/icon-search-black.svg" alt="Иконка поиска" />
     </div>

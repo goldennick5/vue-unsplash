@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, defineEmits, computed, onMounted } from 'vue'
 
-const emit = defineEmits(['update: input'])
+const emit = defineEmits(['update: inputValue'])
 
 const props = defineProps({
   id: {
@@ -16,7 +16,7 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: ''
-  }
+  },
 })
 
 const model = computed({
@@ -24,7 +24,7 @@ const model = computed({
     return props.value
   },
   set(value) {
-    emit('update: input', value)
+    emit('update: inputValue', value)
   }
 })
 
