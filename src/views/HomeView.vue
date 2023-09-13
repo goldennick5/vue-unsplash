@@ -1,12 +1,11 @@
 <script setup>
-import { onMounted } from 'vue'
 import TheSearchSection from '../components/molecules/TheSearchSection.vue'
 import { usePhotosStore } from '../stores/Photos'
 
-const { photos, fetchRandomPhotos, pending } = usePhotosStore()
+const photosStore = usePhotosStore()
 
-if (!photos.length && !pending) {
-  fetchRandomPhotos()
+if (!photosStore.photos.length && !photosStore.pending) {
+  photosStore.fetchRandomPhotos()
 }
 </script>
 
@@ -17,7 +16,7 @@ if (!photos.length && !pending) {
     <template v-else>
       <TheSearchSection />
 
-      <div v-for="photo in photos" :key="photo.id">
+      <div v-for="photo in photosStore.photos" :key="photo.id">
         <!-- <img :src="photo.urls.regular" :alt="photo.description" /> -->
         <span>{{ photo.slug }}</span>
       </div>

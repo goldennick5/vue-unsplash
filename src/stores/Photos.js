@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { API_BASE_URL, API_ACCESS_KEY } from '../constants'
+import { API_BASE_URL, API_ACCESS_KEY, PHOTOS } from '../constants'
 import axios from 'axios'
 
 export const usePhotosStore = defineStore('photosStore', () => {
@@ -12,8 +12,7 @@ export const usePhotosStore = defineStore('photosStore', () => {
   const fetchRandomPhotos = async() => {
     try {
       pending.value = true
-      const response = await get(`${API_BASE_URL}/photos?client_id=${API_ACCESS_KEY}`)
-      photos.value = response.data
+      await get(`${API_BASE_URL}/photos?client_id=${API_ACCESS_KEY}`).then((res) => photos.value = res.data)
     } catch (error) {
       console.log(error, 'Error in fetching photos')
     } finally {
