@@ -4,11 +4,7 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <RouterLink to="/" title="Art Gallery Logo">
-    <img
-      alt="Логотип Art Gallery San Francisco"
-      class="logo"
-      src="/art-gallery-logo.svg"
-    />
+    <img src="/art-gallery-logo.svg" alt="Логотип Art Gallery San Francisco" class="logo" />
   </RouterLink>
 </template>
 

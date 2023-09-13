@@ -1,7 +1,8 @@
 <script setup>
+import { usePhotosStore } from '../stores/Photos'
+import { scrollToTop } from '../functions/index'
 import TheSearchSection from '../components/molecules/TheSearchSection.vue'
 import CardsContainer from '../components/molecules/CardsContainer.vue'
-import { usePhotosStore } from '../stores/Photos'
 
 const photosStore = usePhotosStore()
 if (!photosStore.photos.length && !photosStore.pending) {
@@ -17,9 +18,26 @@ if (!photosStore.photos.length && !photosStore.pending) {
       <TheSearchSection />
       <CardsContainer :photos="photosStore.photos" />
       <div class="load-more__container">
-        <img v-if="photosStore.loadingExtraPhotos" src="icons/icon-loading.svg" class="load-more__loading" alt="Иконка загрузки">
-        <button v-if="!photosStore.loadingExtraPhotos" @click.prevent="photosStore.loadMore" class="load-more__btn">Еще</button>
+        <img
+          v-if="photosStore.loadingExtraPhotos"
+          src="/icons/icon-loading.svg"
+          class="load-more__loading"
+          alt="Иконка загрузки"
+        />
+        <button
+          v-if="!photosStore.loadingExtraPhotos"
+          @click.prevent="photosStore.loadMore"
+          class="load-more__btn"
+        >
+          Еще
+        </button>
       </div>
+      <img
+        src="/icons/icon-button-top.svg"
+        class="go-top__btn"
+        @click="scrollToTop"
+        alt="Кнопка вверх"
+      />
     </template>
   </Suspense>
 </template>
@@ -49,9 +67,8 @@ if (!photosStore.photos.length && !photosStore.pending) {
   cursor: pointer;
 }
 
-
 .load-more__btn:hover {
-  background-color: #2EE59D;
+  background-color: #2ee59d;
   box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
   color: #fff;
   transform: translateY(-7px);
@@ -70,5 +87,12 @@ if (!photosStore.photos.length && !photosStore.pending) {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.go-top__btn {
+  position: fixed;
+  bottom: 2%;
+  right: 1%;
+  cursor: pointer;
 }
 </style>

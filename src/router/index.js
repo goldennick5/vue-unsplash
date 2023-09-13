@@ -12,6 +12,11 @@ const router = createRouter({
       path: '/favourites',
       name: 'favourites',
       component: () => import('../views/FavouritesView.vue')
+    },
+    {
+      path: '/about-photo/:photoId',
+      name: 'about-photo',
+      component: () => import('../views/AboutPhotoView.vue')
     }
   ]
 })

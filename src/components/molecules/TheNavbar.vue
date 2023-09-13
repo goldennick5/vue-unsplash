@@ -7,13 +7,13 @@ import { RouterLink } from 'vue-router'
     <ul class="nav__menu">
       <li class="nav__menu-link">
         <RouterLink to="/">
-          <img src="icons/icon-search.svg" alt="Иконка поиска" />
+          <img src="/icons/icon-search.svg" alt="Иконка поиска" />
           <span>Поиск</span>
         </RouterLink>
       </li>
       <li class="nav__menu-link">
         <RouterLink to="/favourites">
-          <img src="icons/icon-favourites.svg" alt="Иконка сердца" />
+          <img src="/icons/icon-favourites.svg" alt="Иконка сердца" />
           <span>Избранное</span>
         </RouterLink>
       </li>
@@ -26,7 +26,7 @@ import { RouterLink } from 'vue-router'
   display: flex;
 }
 
-.nav__menu-link a{
+.nav__menu-link a {
   display: flex;
   align-items: center;
 }

@@ -1,4 +1,8 @@
 <script setup>
+import router from '../../router'
+import { RouterLink } from 'vue-router'
+import { usePhotosStore } from '../../stores/Photos'
+
 const props = defineProps({
   photos: {
     type: Array,
@@ -6,14 +10,17 @@ const props = defineProps({
   }
 })
 
+const photosStore = usePhotosStore()
 </script>
 
 <template>
   <div class="photo-card__container container">
     <div class="photo-card" v-for="photo in photos" :key="photo.id">
-      <div class="photo">
-        <img :src="photo.urls.regular" :alt="photo.description" />
-      </div>
+      <RouterLink :to="{ name: 'about-photo', params: { photoId: photo.id } }">
+        <div class="photo">
+          <img :src="photo.urls.regular" :alt="photo.description" />
+        </div>
+      </RouterLink>
     </div>
   </div>
 </template>
@@ -36,6 +43,12 @@ const props = defineProps({
   position: relative;
   padding-bottom: 100%;
   overflow: hidden;
+}
+
+.photo:hover {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 .photo img {

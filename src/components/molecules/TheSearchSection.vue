@@ -5,7 +5,7 @@ import BaseInput from '../atoms/BaseInput.vue'
 
 const photosStore = usePhotosStore()
 
-const handleSearch = async() => {
+const handleSearch = async () => {
   if (photosStore.searchValue.trim() === '') {
     return
   }
@@ -24,14 +24,14 @@ const handleSearch = async() => {
         placeholder="Поиск"
         @keydown.enter="handleSearch"
       />
-      <img src="icons/icon-search-black.svg" alt="Иконка поиска" />
+      <img src="/icons/icon-search-black.svg" alt="Иконка поиска" />
     </div>
   </section>
 </template>
 
 <style scoped>
 .search-section {
-  background: url('search-bg.jpg');
+  background: url('/search-bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

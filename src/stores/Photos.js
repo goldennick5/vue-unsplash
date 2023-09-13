@@ -5,9 +5,9 @@ import axios from 'axios'
 
 export const usePhotosStore = defineStore('photosStore', () => {
   const photos = ref([])
+  const page = ref(1)
   const pending = ref(false)
   const loadingExtraPhotos = ref(false)
-  const page = ref(1)
   const searchValue = ref('')
 
   const { get } = axios
@@ -49,6 +49,15 @@ export const usePhotosStore = defineStore('photosStore', () => {
       loadingExtraPhotos.value = false
     }
   }
+
+  const getSpecificPhoto = async(id) => {
+    try {
+      const response = await get(`${API_BASE_URL}/photos/${id}?client_id=${API_ACCESS_KEY}`)
+      return response.data
+    } catch (error) {
+      console.log(error, `Error in finding photo with id ${id}`)
+    }
+  }
   
   return { 
     photos,
@@ -57,6 +66,7 @@ export const usePhotosStore = defineStore('photosStore', () => {
     searchValue,
     fetchRandomPhotos,
     searchPhoto,
-    loadMore
+    loadMore,
+    getSpecificPhoto
   }
 })
