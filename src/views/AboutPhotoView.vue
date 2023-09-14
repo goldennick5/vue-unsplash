@@ -11,6 +11,27 @@ const route = useRoute()
 
 const photoId = route.params.photoId
 const photo = ref(null)
+const likedPhotos = JSON.parse(localStorage.getItem('likedPhotos')) || []
+const isLiked = ref(false)
+
+const toggleLike = () => {
+  if (!photo.value) return
+
+  const photoUrl = photo.value.urls.full
+
+  if (likedPhotos.includes(photoUrl)) {
+    const index = likedPhotos.indexOf(photoUrl)
+    if (index !== -1) {
+      likedPhotos.splice(index, 1)
+      isLiked.value = false
+    }
+  } else {
+    likedPhotos.push({ id: photo.value.id, url: photoUrl })
+    isLiked.value = true
+  }
+
+  localStorage.setItem('likedPhotos', JSON.stringify(likedPhotos))
+}
 
 onMounted(async () => {
   try {
@@ -23,16 +44,20 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div v-if="photo" class="about-photo container" :style="{ backgroundImage: `url(${photo.urls.full})`}">
+    <div
+      v-if="photo"
+      class="about-photo container"
+      :style="{ backgroundImage: `url(${photo.urls.full})` }"
+    >
       <div class="gray-overlay"></div>
       <div class="about-photo__content">
-        <UserProfile :photo="photo"/>
+        <UserProfile :photo="photo" />
         <div class="about-photo__content-btns">
-          <LikeButton/>
-          <DownloadButton/>
+          <LikeButton :toggleLike="toggleLike" :isLiked="isLiked" />
+          <DownloadButton :photoId="photoId" />
         </div>
       </div>
-      <img :src="photo.urls.regular" class="about-photo__image" :alt="photo.description">
+      <img :src="photo.urls.regular" class="about-photo__image" :alt="photo.description" />
     </div>
     <div v-else>
       <p>Loading...</p>
@@ -41,7 +66,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
 .about-photo {
   background-repeat: no-repeat;
   background-position: center;
@@ -55,16 +79,16 @@ onMounted(async () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(29, 27, 27, 0.5); 
-  z-index: 0; 
+  background-color: rgba(29, 27, 27, 0.5);
+  z-index: 0;
 }
 
 .about-photo__content {
   display: flex;
   justify-content: space-between;
   padding: 2.875rem 0 2.5rem;
-  position: relative; 
-  z-index: 1; 
+  position: relative;
+  z-index: 1;
 }
 .about-photo__content-btns {
   display: flex;
@@ -74,7 +98,7 @@ onMounted(async () => {
   width: 100%;
   height: 744px;
   object-fit: cover;
-  position: relative; 
-  z-index: 1; 
+  position: relative;
+  z-index: 1;
 }
 </style>

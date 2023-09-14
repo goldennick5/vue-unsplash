@@ -58,6 +58,15 @@ export const usePhotosStore = defineStore('photosStore', () => {
       console.log(error, `Error in finding photo with id ${id}`)
     }
   }
+
+  const downloadPhoto = async(id) => {
+    try {
+      const response = await get(`${API_BASE_URL}/photos/${id}/download?client_id=${API_ACCESS_KEY}`)
+      return response.data
+    } catch (error) {
+      console.log(error, 'Error in downloading photo')
+    }
+  }
   
   return { 
     photos,
@@ -67,6 +76,7 @@ export const usePhotosStore = defineStore('photosStore', () => {
     fetchRandomPhotos,
     searchPhoto,
     loadMore,
-    getSpecificPhoto
+    getSpecificPhoto,
+    downloadPhoto
   }
 })

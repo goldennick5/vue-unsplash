@@ -1,7 +1,30 @@
-<script setup></script>
+<script setup>
+import { usePhotosStore } from '../../stores/Photos'
+
+const props = defineProps({
+  photoId: {
+    type: String,
+    required: true
+  }
+})
+
+const photosStore = usePhotosStore()
+
+const downloadPhoto = async () => {
+  try {
+    const response = await photosStore.downloadPhoto(props.photoId)
+
+    if (response && response.url) {
+      window.open(response.url, '_blank')
+    }
+  } catch (error) {
+    console.error('Error downloading photo:', error)
+  }
+}
+</script>
 
 <template>
-  <button class="download-btn">
+  <button class="download-btn" @click="downloadPhoto">
     <img src="/icons/icon-download.svg" alt="Кнопка скачать изображение" width="26" height="22" />
     <span>Download</span>
   </button>
