@@ -8,13 +8,13 @@ import { RouterLink } from 'vue-router'
       <li class="nav__menu-link">
         <RouterLink to="/">
           <img src="/icons/icon-search.svg" alt="Иконка поиска" />
-          <span>Поиск</span>
+          <span class="nav__menu-link-name">Поиск</span>
         </RouterLink>
       </li>
       <li class="nav__menu-link">
         <RouterLink to="/favourites">
           <img src="/icons/icon-favourites.svg" alt="Иконка сердца" />
-          <span>Избранное</span>
+          <span class="nav__menu-link-name">Избранное</span>
         </RouterLink>
       </li>
     </ul>
@@ -43,5 +43,11 @@ import { RouterLink } from 'vue-router'
 
 .nav__menu-link:not(:last-of-type) {
   margin-right: 2.375rem;
+}
+
+@media (max-width: 575.98px){
+  .nav__menu-link-name {
+    display: none;
+  }
 }
 </style>

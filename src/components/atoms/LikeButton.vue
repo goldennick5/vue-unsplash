@@ -26,4 +26,10 @@ img {
   margin-right: 1.25rem;
   cursor: pointer;
 }
+
+@media (max-width: 575.98px) {
+  img {
+    margin-right: 0.5rem;
+  }
+}
 </style>

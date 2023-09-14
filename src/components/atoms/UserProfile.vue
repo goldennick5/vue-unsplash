@@ -47,4 +47,25 @@ const props = defineProps({
   font-weight: 400;
   line-height: normal;
 }
+
+@media (max-width: 575.98px) {
+  .photo__content-author {
+    align-items: center;
+  }
+  .photo__author-name {
+    color: var(--light-gray-color);
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .photo__author-username {
+    color: var(--light-gray-color);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
 </style>

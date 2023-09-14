@@ -26,7 +26,7 @@ const downloadPhoto = async () => {
 <template>
   <button class="download-btn" @click="downloadPhoto">
     <img src="/icons/icon-download.svg" alt="Кнопка скачать изображение" width="26" height="22" />
-    <span>Download</span>
+    <span class="download-btn__name">Download</span>
   </button>
 </template>
 
@@ -45,12 +45,21 @@ const downloadPhoto = async () => {
   padding: 0.813rem 0.95rem 0.87rem;
 }
 
-.download-btn span {
+.download-btn__name {
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   color: var(--black-color);
   margin-left: 1rem;
+}
+
+@media (max-width: 575.98px) {
+  .download-btn {
+    padding: 0.813rem 0.75rem 0.87rem;
+  }
+  .download-btn__name {
+    display: none;
+  }
 }
 </style>
